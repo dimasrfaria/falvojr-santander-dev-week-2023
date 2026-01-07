@@ -1,66 +1,55 @@
-# Santander Dev Week 2023 (indisponível)
+# Pipeline ETL: Marketing Bancário com IA Generativa 🚀
 
-Java RESTful API criada para a Santander Dev Week.
+Este projeto é uma implementação prática do fluxo **ETL (Extract, Transform, Load)**, desenvolvido originalmente para o desafio **Santander Dev Week**. A solução foi adaptada para superar a descontinuidade da API original, utilizando manipulação de arquivos locais e integração com as tecnologias de IA de 2026.
 
-## Principais Tecnologias
- - **Java 17**: Utilizaremos a versão LTS mais recente do Java para tirar vantagem das últimas inovações que essa linguagem robusta e amplamente utilizada oferece;
- - **Spring Boot 3**: Trabalharemos com a mais nova versão do Spring Boot, que maximiza a produtividade do desenvolvedor por meio de sua poderosa premissa de autoconfiguração;
- - **Spring Data JPA**: Exploraremos como essa ferramenta pode simplificar nossa camada de acesso aos dados, facilitando a integração com bancos de dados SQL;
- - **OpenAPI (Swagger)**: Vamos criar uma documentação de API eficaz e fácil de entender usando a OpenAPI (Swagger), perfeitamente alinhada com a alta produtividade que o Spring Boot oferece;
- - **Railway**: facilita o deploy e monitoramento de nossas soluções na nuvem, além de oferecer diversos bancos de dados como serviço e pipelines de CI/CD.
 
-## [Link do Figma](https://www.figma.com/file/0ZsjwjsYlYd3timxqMWlbj/SANTANDER---Projeto-Web%2FMobile?type=design&node-id=1421%3A432&mode=design&t=6dPQuerScEQH0zAn-1)
+## 📋 Resumo do Projeto
 
-O Figma foi utilizado para a abstração do domínio desta API, sendo útil na análise e projeto da solução.
+O objetivo principal é transformar dados brutos de clientes em mensagens de marketing personalizadas. O foco está na **Hyper-personalization**, garantindo que cada cliente receba uma comunicação única baseada em seu perfil, mantendo o *compliance* bancário.
 
-## Diagrama de Classes (Domínio da API)
+---
 
-```mermaid
-classDiagram
-  class User {
-    -String name
-    -Account account
-    -Feature[] features
-    -Card card
-    -News[] news
-  }
+## 🏗️ Arquitetura do Pipeline
 
-  class Account {
-    -String number
-    -String agency
-    -Number balance
-    -Number limit
-  }
+### 1. FASE "E" -> EXTRACT (Extração)
+Os dados são extraídos de um arquivo estruturado `SDW2026.csv` utilizando a biblioteca **Pandas**. 
+* **Limitação de Amostragem**: Devido às cotas das APIs gratuitas, o processo é validado com um conjunto controlado de usuários.
 
-  class Feature {
-    -String icon
-    -String description
-  }
+### 2. FASE "T" -> TRANSFORMATION (Transformação)
+Esta é a etapa de maior valor agregado, onde a inteligência artificial processa os dados:
+* **Multi-LLM Support**: Integração com **OpenAI (GPT-3.5-Turbo)** e **Google Gemini (2.0 Flash)**.
+* **Prompt Engineering**: Definição de diretrizes rígidas para manter o tom institucional e evitar a invenção de taxas ou valores.
+* **Resiliência**: Implementação de pausas controladas (`time.sleep`) para evitar erros de limite de requisição (Rate Limit).
 
-  class Card {
-    -String number
-    -Number limit
-  }
+### 3. FASE "L" -> LOAD (Carregamento)
+O resultado final é persistido localmente para manter o histórico das campanhas:
+* **Persistência em CSV**: Gravação no arquivo `SDW2026_news.csv`.
+* **Modo Append**: O sistema adiciona novas interações sem sobrescrever dados históricos.
+* **Auditoria**: Registro automático de *Timestamp* para cada mensagem gerada.
 
-  class News {
-    -String icon
-    -String description
-  }
+---
 
-  User "1" *-- "1" Account
-  User "1" *-- "N" Feature
-  User "1" *-- "1" Card
-  User "1" *-- "N" News
-```
+## 🛠️ Tecnologias e Bibliotecas
+* **Python 3.12+**
+* **Pandas**: Processamento de tabelas e arquivos.
+* **Google GenAI (SDK 2026)**: Motor de inteligência artificial.
+* **Python-dotenv**: Gestão de variáveis de ambiente.
+* **Google Colab Secrets**: Armazenamento seguro de credenciais.
 
-## IMPORTANTE
+---
 
-Este projeto foi construído com um viés totalmente educacional para a DIO. Por isso, disponibilizamos uma versão mais robusta dele no repositório oficial da DIO:
+## 🛡️ Segurança e Práticas Recomendadas
+Para garantir a proteção das chaves de API e a qualidade do código, foram aplicadas as seguintes práticas:
+* **Uso de `.gitignore`**: Arquivos sensíveis como `.env` e caches de sistema são ignorados pelo controle de versão.
+* **Gestão de Segredos**: Uso de variáveis de ambiente para nunca expor chaves privadas no código fonte.
+* **Tratamento de Exceções**: Blocos `try-except` robustos para garantir que falhas em um registro não interrompam todo o pipeline.
 
-### [digitalinnovationone/santander-dev-week-2023-api](https://github.com/digitalinnovationone/santander-dev-week-2023-api)
+---
 
-Lá incluímos todas os endpoints de CRUD, além de aplicar boas práticas (uso de DTOs e refinamento na documentação da OpenAPI). Sendo assim, caso queira um desafio/referência mais completa é só acessar 👊🤩
-
+## 🚀 Como Executar
+1. Certifique-se de ter as bibliotecas instaladas:
+   ```bash
+   pip install pandas google-genai python-dotenv
 ## INDISPONIBILIDADE DA API -Santander Dev Week 2023
 
 A API não esta mais disponível. (Uma abordagem com base em arquivos CSV foi utilizada para o desenvolvimento do Projeto proposto.
