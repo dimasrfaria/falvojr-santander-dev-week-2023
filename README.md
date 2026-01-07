@@ -50,6 +50,4 @@ Para garantir a proteção das chaves de API e a qualidade do código, foram apl
 1. Certifique-se de ter as bibliotecas instaladas:
    ```bash
    pip install pandas google-genai python-dotenv
-## INDISPONIBILIDADE DA API -Santander Dev Week 2023
-
-A API não esta mais disponível. (Uma abordagem com base em arquivos CSV foi utilizada para o desenvolvimento do Projeto proposto.
+   
