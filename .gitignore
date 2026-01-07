@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### variáveis de ambiente ###
+.env
